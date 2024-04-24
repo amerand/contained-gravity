@@ -1,6 +1,45 @@
-# running ESO GRAVITY pipeline in docker
+# Running the ESO GRAVITY pipeline and Consortium Python tools / esoreflex in continers
 
-Build the image:
+## Apptainer
+
+Although Docker is very popular for containerisation, but is optimised for micro-services running on host, requiring the user to have some kind of root access... [Apptainer](https://apptainer.org) is optimised for scientific computing and offer practical containers for scientifc computation, especially on shared systems. 
+
+The resulting `.sif` images are executables and which run with all your files mounted. This enables to have a command line tool to reduce data, as if you would switch environment just to reduce data... 
+
+Read a good introduction at [https://hsf-training.gitub.io](https://hsf-training.github.io/hsf-training-singularity-webpage/01-introduction/index.html).
+
+### Build the images: gravity-1.6.6 and python tools
+```
+apptainer build gravipipe.sif [gravipipe.def](./gravipipe.def)
+```
+Note that if you are on computer missing /etc/subuid mapping (you will get some errors about [`getopt: command not found`](https://github.com/apptainer/apptainer/issues/1863)), you can also try:
+```
+apptainer build -B /usr/bin/getopt gravipipe.sif [gravipipe.def](./gravipipe.def)
+```
+
+You then run the image, giving you and environment with the pipeline and python tools installed.
+```
+./gravipipe.sif
+Apptainer> run_gravi_reduce.py --vis=TRUE --tf=TRUE --vical=TRUE --gravity_vis.flat-flux=TRUE --gravity_vis.vis-correction-sc=FORCE --gravity_vis.p2vmreduced-file=FALSE --gravity_vis.astro-file=FALSE --commoncalib-dir=/usr/share/esopipes/datastatic/gravity-1.6.6/ --gravity_vis.reduce-acq-cam=FALSE
+```
+
+### Build the images: gravity-1.6.6 and ESO Reflex
+
+You can also build the image with the pipeline and esoreflex using [gravipipeReflex.def](./gravipipeReflex.def). Running the `.sif` image will automatically start Reflex. 
+
+This has not been tested beyond starting Reflex: feedback is welcome!
+
+## Docker 
+
+The container is a Fedora 37 environment which contains all you need to reduce and analyse 
+- [ESO GRAVITY pipeline](https://www.eso.org/sci/software/pipelines/gravity/) version 1.6.6. The installation is made using the dnf package manager
+- python3, with numpy, scipy, matplotlib, astropy, astroquery and jupyter-lab
+- the GRAVITY consortium [Python tools](https://version-lesia.obspm.fr:/repos/DRS_gravity/python_tools) to call the pipeline
+- `dfits` and `fitsort` old school command lines, which sources have been [preserved by Grant Tremblay](https://github.com/granttremblay/eso_fits_tools)
+- `gravi_list_rawfits.py` based on `dfits` and `fitsort` to display the content of a directory of GRAVITY ra FITS files, using color to show the nature of the files (works better with dark terminal)
+- [`PMOIRED`](https://github.com/amerand/PMOIRED) to have a quicklook at the data, or do a full fledge analysis!
+
+### Build the image:
 ```
 docker build -t gravipipe:latest .
 ```
@@ -11,24 +50,15 @@ docker run -it -p 8890:8888 -v /home/antoine/DATA/HD58647:/data --name="gravi" -
 ```
 Put your raw data in the shared directory (here data). In a browser, go to [`http://localhost:8890`](http://localhost:8890) (if you run the docker locally, or to the address of the machine you are running the container on) to connect to jupyter-lab running in `/data`. From there you can reduce GRAVITY data using a terminal ad the python tools. Only the `/data` directory is shared btween the host and the container. To reduce data in another directy, you can run another instance of the container, or stop it then remove the first one to re-run with the new directory. ***Any changes outside `/data` will be lost once you remove the container!*** (e.g. if you install new software inside the container).
 
-## details:
 
-The container is a Fedora 37 environment which contains:
-- [ESO GRAVITY pipeline](https://www.eso.org/sci/software/pipelines/gravity/) version 1.6.6. The installation is made using the dnf package manager
-- python3, with numpy, scipy, matplotlib, astropy, astroquery and jupyter-lab
-- the GRAVITY consortium [Python tools](https://version-lesia.obspm.fr:/repos/DRS_gravity/python_tools) to call the pipeline
-- `dfits` and `fitsort` old school command lines, which sources have been [preserved by Grant Tremblay](https://github.com/granttremblay/eso_fits_tools)
-- `gravi_list_rawfits.py` based on `dfits` and `fitsort` to display the content of a directory of GRAVITY ra FITS files, using color to show the nature of the files (works better with dark terminal)
-- [`PMOIRED`](https://github.com/amerand/PMOIRED) to have a quicklook at the data, or do a full fledge analysis!
-
-## colorised dfits of raw data 
+### colorised dfits of raw data 
 in a terminal of the jupyter-lab:
 ```
 gravi_list_rawfits.py .
 ```
 ![gravi_list_rawfits](doc/gravi_list_rawfits.png)
 
-## Reduce using python tools
+### Reduce using python tools
 in a terminal of the jupyter-lab:
 ```
 run_gravi_reduce.py --vis=TRUE --gravity_vis.flat-flux=TRUE --gravity_vis.vis-correction-sc=FORCE --gravity_vis.p2vmreduced-file=FALSE --gravity_vis.astro-file=FALSE --commoncalib-dir=/usr/share/esopipes/datastatic/gravity-1.6.6/  --gravity_vis.reduce-acq-cam=FALSE --viscal=TRUE --tf=TRUE

@@ -1,0 +1,20 @@
+Bootstrap: docker
+From: fedora:37
+
+%labels
+  Author Antoine Mérand
+
+%setup
+  # -- see https://github.com/apptainer/apptainer/issues/1863
+  # build with "apptainer build -B /usr/bin/getopt gravipipeReflex.sif gravipipeReflex.def"
+  touch $APPTAINER_ROOTFS/usr/bin/getopt
+
+%post
+  # -- ESO pipeline
+  dnf -y install dnf-plugins-core 
+  dnf -y config-manager --add-repo=https://ftp.eso.org/pub/dfs/pipelines/repositories/stable/fedora/esorepo.repo
+  dnf -y install esopipe-gravity-1.6.6
+  dnf -y install esoreflex
+
+%runscript
+  esoreflex
