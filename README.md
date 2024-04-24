@@ -1,12 +1,10 @@
-# Running the [ESO GRAVITY pipeline](https://www.eso.org/sci/software/pipelines/gravity/) and [GRAVITY's Python tools](https://version-lesia.obspm.fr:/repos/DRS_gravity/python_tools) or [esoreflex](https://www.eso.org/sci/software/esoreflex/) in continers
+# Running the [ESO GRAVITY pipeline](https://www.eso.org/sci/software/pipelines/gravity/) and [GRAVITY's Python tools](https://version-lesia.obspm.fr:/repos/DRS_gravity/python_tools) or [esoreflex](https://www.eso.org/sci/software/esoreflex/) in containers
 
 ## [Apptainer](https://apptainer.org)
 
-Although Docker is very popular for containerisation, but is optimised for micro-services running on host, requiring the user to have some kind of root access... Apptainer is optimised for scientific computing and offer practical containers for scientifc computation, especially on shared systems. 
+Although Docker is very popular for containerisation, it is optimised for micro-services running on host requiring the user to have some kind of root access. Apptainer is optimised for scientific computing and offer practical containers for scientifc computation, especially on shared systems. 
 
-The resulting `.sif` images are executables and which run with all your files mounted. This enables to have a command line tool to reduce data, as if you would switch environment just to reduce data... 
-
-Read a good introduction at [https://hsf-training.gitub.io](https://hsf-training.github.io/hsf-training-singularity-webpage/01-introduction/index.html).
+A good case for Apptainer is made in the [Apptainer User Guide](https://apptainer.org/docs/user/latest/introduction.html).
 
 ### Build the images: gravity-1.6.6 and python tools
 Using [gravipipe.def](./gravipipe.def):
