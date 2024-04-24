@@ -1,26 +1,30 @@
-# Running the ESO GRAVITY pipeline and Consortium Python tools / esoreflex in continers
+# Running the [ESO GRAVITY pipeline](https://www.eso.org/sci/software/pipelines/gravity/) and [GRAVITY's Python tools](https://version-lesia.obspm.fr:/repos/DRS_gravity/python_tools) or [esoreflex](https://www.eso.org/sci/software/esoreflex/) in continers
 
-## Apptainer
+## [Apptainer](https://apptainer.org)
 
-Although Docker is very popular for containerisation, but is optimised for micro-services running on host, requiring the user to have some kind of root access... [Apptainer](https://apptainer.org) is optimised for scientific computing and offer practical containers for scientifc computation, especially on shared systems. 
+Although Docker is very popular for containerisation, but is optimised for micro-services running on host, requiring the user to have some kind of root access... Apptainer is optimised for scientific computing and offer practical containers for scientifc computation, especially on shared systems. 
 
 The resulting `.sif` images are executables and which run with all your files mounted. This enables to have a command line tool to reduce data, as if you would switch environment just to reduce data... 
 
 Read a good introduction at [https://hsf-training.gitub.io](https://hsf-training.github.io/hsf-training-singularity-webpage/01-introduction/index.html).
 
 ### Build the images: gravity-1.6.6 and python tools
+Using [gravipipe.def](./gravipipe.def):
+
 ```
-apptainer build gravipipe.sif [gravipipe.def](./gravipipe.def)
+$ apptainer build gravipipe.sif gravipipe.def
 ```
 Note that if you are on computer missing /etc/subuid mapping (you will get some errors about [`getopt: command not found`](https://github.com/apptainer/apptainer/issues/1863)), you can also try:
 ```
-apptainer build -B /usr/bin/getopt gravipipe.sif [gravipipe.def](./gravipipe.def)
+$ apptainer build -B /usr/bin/getopt gravipipe.sif gravipipe.def
 ```
 
-You then run the image, giving you and environment with the pipeline and python tools installed.
+You then run the `.sif` image (in the directory where you GRAVITY FITS files are), you get an environment with the pipeline and python tools installed (as well as a custom colorised dfits|fitsort):
 ```
-./gravipipe.sif
-Apptainer> run_gravi_reduce.py --vis=TRUE --tf=TRUE --vical=TRUE --gravity_vis.flat-flux=TRUE --gravity_vis.vis-correction-sc=FORCE --gravity_vis.p2vmreduced-file=FALSE --gravity_vis.astro-file=FALSE --commoncalib-dir=/usr/share/esopipes/datastatic/gravity-1.6.6/ --gravity_vis.reduce-acq-cam=FALSE
+Apptainer> gravi_list_rawfits.py
+Apptainer> run_gravi_reduce.py --vis=TRUE --tf=TRUE --viscal=TRUE --gravity_vis.flat-flux=TRUE \
+--gravity_vis.vis-correction-sc=FORCE --gravity_vis.p2vmreduced-file=FALSE --gravity_vis.astro-file=FALSE \
+--gravity_vis.reduce-acq-cam=FALSE --commoncalib-dir=/usr/share/esopipes/datastatic/gravity-1.6.6/ 
 ```
 
 ### Build the images: gravity-1.6.6 and ESO Reflex
@@ -41,17 +45,17 @@ The container is a Fedora 37 environment which contains all you need to reduce a
 
 ### Build the image:
 ```
-docker build -t gravipipe:latest .
+$ docker build -t gravipipe:latest .
 ```
 
 Run the image, sharing the directory which contain GRAVITY data to reduce (here `/home/antoine/DATA/HD58647`) on the machine running the container onto `/data` in the container:
 ```
-docker run -it -p 8890:8888 -v /home/antoine/DATA/HD58647:/data --name="gravi" -d gravipipe
+$ docker run -it -p 8890:8888 -v /home/antoine/DATA/HD58647:/data --name="gravi" -d gravipipe
 ```
 Put your raw data in the shared directory (here data). In a browser, go to [`http://localhost:8890`](http://localhost:8890) (if you run the docker locally, or to the address of the machine you are running the container on) to connect to jupyter-lab running in `/data`. From there you can reduce GRAVITY data using a terminal ad the python tools. Only the `/data` directory is shared btween the host and the container. To reduce data in another directy, you can run another instance of the container, or stop it then remove the first one to re-run with the new directory. ***Any changes outside `/data` will be lost once you remove the container!*** (e.g. if you install new software inside the container).
 
 
-### colorised dfits of raw data 
+## colorised dfits of raw data 
 in a terminal of the jupyter-lab:
 ```
 gravi_list_rawfits.py .

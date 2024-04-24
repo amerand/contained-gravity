@@ -2,7 +2,10 @@
 
 import sys, os
 
-directory = sys.argv[1]
+if len(sys.argv)>1:
+    directory = sys.argv[1]
+else:
+    directory = './'
 
 # http://stackoverflow.com/questions/287871/print-in-terminal-with-colors-using-python
 colors = {'GREEN':'\033[92m',   'GREENBG':'\033[42m',
