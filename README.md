@@ -13,7 +13,7 @@ Using [gravipipe.def](./gravipipe.def):
 $ apptainer build gravipipe.sif gravipipe.def
 ```
 
-You then run the `.sif` image (in the directory where you GRAVITY FITS files are), you get an environment with the pipeline and python tools installed (as well as a custom colorised dfits|fitsort):
+You then run the `.sif` image (in the directory where you GRAVITY FITS files are), you get an environment with the pipeline and python tools installed (as well as a custom [colorised](./gravi_list_rawfits.py) [dfits/fitsort](https://github.com/granttremblay/eso_fits_tools)):
 ```
 Apptainer> gravi_list_rawfits.py
 Apptainer> run_gravi_reduce.py --vis=TRUE --tf=TRUE --viscal=TRUE --gravity_vis.flat-flux=TRUE \
