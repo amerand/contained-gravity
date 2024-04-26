@@ -12,10 +12,6 @@ Using [gravipipe.def](./gravipipe.def):
 ```
 $ apptainer build gravipipe.sif gravipipe.def
 ```
-Note that if you are on computer missing /etc/subuid mapping (you will get some errors about [`getopt: command not found`](https://github.com/apptainer/apptainer/issues/1863)), you can also try:
-```
-$ apptainer build -B /usr/bin/getopt gravipipe.sif gravipipe.def
-```
 
 You then run the `.sif` image (in the directory where you GRAVITY FITS files are), you get an environment with the pipeline and python tools installed (as well as a custom colorised dfits|fitsort):
 ```
