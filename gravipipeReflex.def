@@ -4,11 +4,6 @@ From: fedora:37
 %labels
   Author Antoine Mérand
 
-%setup
-  # -- see https://github.com/apptainer/apptainer/issues/1863
-  # build with "apptainer build -B /usr/bin/getopt gravipipeReflex.sif gravipipeReflex.def"
-  touch $APPTAINER_ROOTFS/usr/bin/getopt
-
 %post
   # -- ESO pipeline
   dnf -y install dnf-plugins-core 

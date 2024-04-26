@@ -1,10 +1,11 @@
 Bootstrap: docker
 From: fedora:37
 
+%labels
+  Author Antoine Mérand
+
 %files
   gravi_list_rawfits.py /usr/bin
-
-%setup
 
 %post
   # -- ESO pipeline
