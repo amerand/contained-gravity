@@ -15,7 +15,7 @@ From: fedora:37
 
   # -- consortium python tools 
   dnf -y install subversion python3-pip
-  pip3 install astropy
+  pip3 install numpy astropy reportlab pdfrw svglib
   # -- old version: 
   svn co https://version-lesia.obspm.fr/repos/DRS_gravity/python_tools
   # -- newer version:
