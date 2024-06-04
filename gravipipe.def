@@ -33,7 +33,8 @@ From: fedora:37
   cp fitsort /usr/bin
 
 %environment
-  PATH="${PATH}:/python_tools"
+  #PATH="${PATH}:/python_tools"
+  PATH="${PATH}:/gravi_tools3"
 
 %help
   * you can list the files in the directory by typing:
