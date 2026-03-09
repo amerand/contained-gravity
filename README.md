@@ -24,7 +24,7 @@ Apptainer> run_gravi_reduce.py --vis=TRUE --tf=TRUE --viscal=TRUE \
 --gravity_vis.flat-flux=TRUE --gravity_vis.vis-correction-sc=FORCE \
 --gravity_vis.p2vmreduced-file=FALSE --gravity_vis.astro-file=FALSE \
 --gravity_vis.reduce-acq-cam=FALSE \
---commoncalib-dir=/usr/share/esopipes/datastatic/gravity-1.9.6/ 
+--commoncalib-dir=/usr/share/esopipes/datastatic/gravity-*/ 
 ```
 
 ### Build the images: gravity-1.6.6 and ESO Reflex
