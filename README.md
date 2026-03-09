@@ -6,7 +6,7 @@ Although Docker is very popular for containerisation, it is optimised for micro-
 
 A good case for Apptainer is made in the [Apptainer User Guide](https://apptainer.org/docs/user/latest/introduction.html).
 
-### Build the images: gravity-1.7.0 and python tools
+### Build the images: gravity-1.9.6 and python tools
 To change the version of the pipeline, you can edit [gravipipe.def](./gravipipe.def) and change the pipeline version (make sure you also check you are using a supported version of Fedora!). Then build the container image:
 ```
 $ apptainer build gravipipe.sif gravipipe.def
@@ -24,7 +24,7 @@ Apptainer> run_gravi_reduce.py --vis=TRUE --tf=TRUE --viscal=TRUE \
 --gravity_vis.flat-flux=TRUE --gravity_vis.vis-correction-sc=FORCE \
 --gravity_vis.p2vmreduced-file=FALSE --gravity_vis.astro-file=FALSE \
 --gravity_vis.reduce-acq-cam=FALSE \
---commoncalib-dir=/usr/share/esopipes/datastatic/gravity-1.7.0/ 
+--commoncalib-dir=/usr/share/esopipes/datastatic/gravity-1.9.6/ 
 ```
 
 ### Build the images: gravity-1.6.6 and ESO Reflex
