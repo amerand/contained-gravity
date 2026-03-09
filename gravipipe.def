@@ -12,10 +12,10 @@ From: fedora:38
   dnf -y install dnf-plugins-core
   dnf config-manager --add-repo=https://ftp.eso.org/pub/dfs/pipelines/repositories/stable/fedora/esorepo.repo
   dnf list esopipe-gravity-\*
-  dnf -y install esopipe-gravity-1.7.0
+  dnf -y install esopipe-gravity-1.9.6
 
   # -- consortium python tools 
-  dnf -y install subversion python3-pip
+  dnf -y install subversion python3-pip cairo-devel python3-devel gcc cmake
   pip3 install numpy astropy reportlab pdfrw svglib joblib
   # -- old version: 
   # svn co https://version-lesia.obspm.fr/repos/DRS_gravity/python_tools
