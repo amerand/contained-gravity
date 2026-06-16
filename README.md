@@ -57,9 +57,5 @@ gravi_list_rawfits.py .
 ```
 ![gravi_list_rawfits](doc/gravi_list_rawfits.png)
 
-### Reduce using python tools
-in a terminal of the jupyter-lab:
-```
-run_gravi_reduce.py --vis=TRUE --gravity_vis.flat-flux=TRUE --gravity_vis.vis-correction-sc=FORCE --gravity_vis.p2vmreduced-file=FALSE --gravity_vis.astro-file=FALSE --commoncalib-dir=/usr/share/esopipes/datastatic/gravity-1.6.6/  --gravity_vis.reduce-acq-cam=FALSE --viscal=TRUE --tf=TRUE
-```
+
 
