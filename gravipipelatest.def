@@ -12,9 +12,9 @@ From: fedora:38
   dnf -y install dnf-plugins-core emacs
   dnf config-manager --add-repo=https://ftp.eso.org/pub/dfs/pipelines/repositories/stable/fedora/esorepo.repo
 
-
-  # -- install specific version
-  #dnf list esopipe-gravity-\*
+  # -- list currently available versions 
+  dnf list esopipe-gravity-\*
+  # -- install a specific version
   #dnf -y install esopipe-gravity-1.9.6
 
   # -- install last version available
@@ -42,7 +42,9 @@ From: fedora:38
   cp fitsort /usr/bin
 
 %environment
+  # -- old version
   #PATH="${PATH}:/python_tools"
+  # -- new version
   PATH="${PATH}:/gravi_tools3"
 
 %help
@@ -52,5 +54,5 @@ From: fedora:38
 
   * you can run you GRAVITY reduction by typing:
 
-  run_gravi_reduce.py --vis=TRUE --gravity_vis.flat-flux=TRUE --gravity_vis.vis-correction-sc=FORCE --gravity_vis.p2vmreduced-file=FALSE --gravity_vis.astro-file=FALSE --commoncalib-dir=/usr/share/esopipes/datastatic/gravity-1.7.0/ --gravity_vis.reduce-acq-cam=FALSE --tf=TRUE --viscal=TRUE
+  run_gravi_reduce.py --vis=TRUE --gravity_vis.flat-flux=TRUE --gravity_vis.vis-correction-sc=VFACTOR --gravity_vis.p2vmreduced-file=FALSE --gravity_vis.astro-file=FALSE --commoncalib-dir=/usr/share/esopipes/datastatic/gravity-*/ --gravity_vis.reduce-acq-cam=FALSE --tf=TRUE --viscal=TRUE
 

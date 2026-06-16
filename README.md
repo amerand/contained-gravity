@@ -6,28 +6,29 @@ Although Docker is very popular for containerisation, it is optimised for micro-
 
 A good case for Apptainer is made in the [Apptainer User Guide](https://apptainer.org/docs/user/latest/introduction.html).
 
-### Build the images: gravity-1.9.6 and python tools
+### Build the images: latest gravity pipeline and consortium's python tools
 To change the version of the pipeline, you can edit [gravipipe.def](./gravipipe.def) and change the pipeline version (make sure you also check you are using a supported version of Fedora!). Then build the container image:
 ```
-$ apptainer build gravipipe.sif gravipipe.def
+$ apptainer build gravipipelatest.sif gravipipelatest.def
 ```
+You then run the `.sif` image in the directory where you GRAVITY FITS files are. For example, you can go to the `data` directory and run the script top get the test dataset (beware: 18G data set!). You get an environment with the pipeline and python tools installed (as well as a custom [colorised](./gravi_list_rawfits.py) [dfits/fitsort](https://github.com/granttremblay/eso_fits_tools)):
 
-You then run the `.sif` image (in the directory where you GRAVITY FITS files are):
 ```
-$ apptainer shell gravipipe.sif
-```
-
-You get an environment with the pipeline and python tools installed (as well as a custom [colorised](./gravi_list_rawfits.py) [dfits/fitsort](https://github.com/granttremblay/eso_fits_tools)):
-```
-Apptainer> gravi_list_rawfits.py
+$ cd data
+$ sh downloadScript_8da416fc-0450-448a-9219-45051ea72b56.sh
+$ uncompress *.Z
+$ apptainer shell ../gravipipelatest.sif
+Apptainer> gravi_list_rawfits.py ./
 Apptainer> run_gravi_reduce.py --vis=TRUE --tf=TRUE --viscal=TRUE \
---gravity_vis.flat-flux=TRUE --gravity_vis.vis-correction-sc=FORCE \
+--gravity_vis.flat-flux=TRUE --gravity_vis.vis-correction-sc=VFACTOR \
 --gravity_vis.p2vmreduced-file=FALSE --gravity_vis.astro-file=FALSE \
 --gravity_vis.reduce-acq-cam=FALSE \
 --commoncalib-dir=/usr/share/esopipes/datastatic/gravity-*/ 
 ```
 
-### Build the images: gravity-1.6.6 and ESO Reflex
+After running for a few minutes (use `ctrl`+`d`to exist apptainer), you get the reduced data in `reduced/*vis.fits`. and the calibrated data in `reduced/calibrated/*calibrated.fits`. You can visualise and analyse the data with [`PMOIRED`](https://www.github.com/amerand/PMOIRED). This particular dataset is featured as a [`PMOIRED` example](https://www.github.com/amerand/PMOIRED_examples), specifically the [#5](https://htmlpreview.github.io/?https://github.com/amerand/PMOIRED_examples/blob/main/html/EX5%20Binary%20with%20spectroscopic%20lines.html): the fit to a spectroscopic binary with absorption lines.
+
+### Build the Docker image: gravity-1.6.6 and ESO Reflex
 
 You can also build the image with the pipeline and esoreflex using [gravipipeReflex.def](./gravipipeReflex.def). Running the `.sif` image will automatically start Reflex. 
 
