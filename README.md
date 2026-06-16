@@ -1,5 +1,13 @@
 # Running the [ESO GRAVITY pipeline](https://www.eso.org/sci/software/pipelines/gravity/) and [GRAVITY's Python tools](https://version-lesia.obspm.fr:/repos/DRS_gravity/python_tools) or [esoreflex](https://www.eso.org/sci/software/esoreflex/) in containers
 
+## Why?
+
+[ESO pipeline](https://www.eso.org/sci/software/pipe_aem_main.html) are only supported for specific versions of Linux, and it is not easy to install several different versions concurently on the same operating system. Containers enable to package the installation which is portable and immutable, and can run on a different version of Linux.
+
+If you want to run the [GRAVITY](https://www.eso.org/sci/facilities/paranal/instruments/gravity.html) pipeline on Linux but do not have the rights to install it, or if you run a different distribution (not Fedora 38), or of you want to preserve your data reduction environment, this apporach is a solution.
+
+_Note: ESO now offers [container definition files]https://www.eso.org/sci/software/apptainer.html). This project is only relevant for the GRAVITY instrument, but offers functionnalities not offered by the ESO solution: it runs the pipeline using python scripts developped by the GRAVITY consortium, whereas the ESO sultion uses [Reflex](https://www.eso.org/sci/software/esoreflex/). The results are the same, only the way of calling the `esorex` recipes is different._
+
 ## [Apptainer](https://apptainer.org)
 
 Although Docker is very popular for containerisation, it is optimised for micro-services running on host requiring the user to have some kind of root access. Apptainer is optimised for scientific computing and offer practical containers for scientifc computation, especially on shared systems. 
