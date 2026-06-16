@@ -11,7 +11,7 @@ To change the version of the pipeline, you can edit [gravipipe.def](./gravipipe.
 ```
 $ apptainer build gravipipelatest.sif gravipipelatest.def
 ```
-You then run the `.sif` image in the directory where you GRAVITY FITS files are. For example, you can go to the `data` directory and run the script top get the test dataset (beware: 18G data set!). You get an environment with the pipeline and python tools installed (as well as a custom [colorised](./gravi_list_rawfits.py) [dfits/fitsort](https://github.com/granttremblay/eso_fits_tools)):
+You then run the `.sif` image in the directory where you GRAVITY FITS files are. For example, you can go to the `data` directory and run the script top get the test dataset (beware: 18G data set!). With `apptainer shell`, you get an environment with the pipeline and python tools installed (as well as a custom [colorised](./gravi_list_rawfits.py) [dfits/fitsort](https://github.com/granttremblay/eso_fits_tools)):
 
 ```
 $ cd data
@@ -27,12 +27,6 @@ Apptainer> run_gravi_reduce.py --vis=TRUE --tf=TRUE --viscal=TRUE \
 ```
 
 After running for a few minutes (use `ctrl`+`d`to exist apptainer), you get the reduced data in `reduced/*vis.fits`. and the calibrated data in `reduced/calibrated/*calibrated.fits`. You can visualise and analyse the data with [`PMOIRED`](https://www.github.com/amerand/PMOIRED). This particular dataset is featured as a [`PMOIRED` example](https://www.github.com/amerand/PMOIRED_examples), specifically the [#5](https://htmlpreview.github.io/?https://github.com/amerand/PMOIRED_examples/blob/main/html/EX5%20Binary%20with%20spectroscopic%20lines.html): the fit to a spectroscopic binary with absorption lines.
-
-### Build the Docker image: gravity-1.6.6 and ESO Reflex
-
-You can also build the image with the pipeline and esoreflex using [gravipipeReflex.def](./gravipipeReflex.def). Running the `.sif` image will automatically start Reflex. 
-
-This has not been tested beyond starting Reflex: feedback is welcome!
 
 ## Docker 
 
