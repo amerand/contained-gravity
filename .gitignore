@@ -1,0 +1,7 @@
+data/*.fits
+data/*.xml
+data/*.txt
+data/reduced/*
+*.sif
+*~
+
